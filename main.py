@@ -50,19 +50,7 @@ else:
       #for loop가 끝나도 result list에 저장되어 있기 때문에 사라지지 않아!
       results.append(job_data)
 
-      
 
-    
-
-
-
-
-
-
-
-
-      
-    
 # 이 python list를 만들었고, 즉 이제 for resulit in을 사용 가능 하다.
 
   for result in results:
