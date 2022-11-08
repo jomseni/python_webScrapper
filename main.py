@@ -2,12 +2,16 @@ from requests import get
 from bs4 import BeautifulSoup
 
 base_url = "https://weworkremotely.com/remote-jobs/search?utf8=%E2%9C%93&term="
+# 여기서 문자를 바꿔주면 내가 찾고 싶은 단어를 이용해 데이터에서 찾아올 수 있다.
 search_term = "python"
 
 response = get(f"{base_url}{search_term}")
 if response.status_code != 200:
   print("Can't request website")
 else:
+
+  results = []
+  
   soup = BeautifulSoup(response.text,"html.parser")
   jobs = soup.find_all('section', class_="jobs")
   for job_section  in jobs:
@@ -34,16 +38,35 @@ else:
       # 이번엔 title을 가져오기
       # find_all은 태그가 여러 개 일 경우 list로 가져오지만 title태그는 하나밖에 없으므로 find로 데이터를 가져온다
       #이렇게 job의 title을 얻었으니 title에 저장하기(find_all 이 아니므로 하나의 변수로 저장)
-      title = anchor.find('span', class_="title")
-      print(company,kind,region,title)
-      print("//////////////////////////////////////////////")
-      print("//////////////////////////////////////////////")
-
-      # 이렇게 데이터를 가져와 출력 하게 되면 이 url에 있는 회사들의 데이터를 구분해서 확인할 수 있다.
+      title = anchor.find('span', class_="title") 
+      #데이터를 데이터 구조(딕셔너리 형태) 안에 넣기 
+      job_data = {
+        'company' : company.string,
+        'region' : region.string,
+        'position' : title.string
+      }
+      # job을 추출할 때 마다 result 배열에 추가적으로 저장해줘야한다.
+      # 이렇게 하지 않으면 job for loop를 돌 때마다 초기화가 되기 때문이다(job 각각이 저장되지 않는다 + for loop안에서만 저장되어 있다)
+      #for loop가 끝나도 result list에 저장되어 있기 때문에 사라지지 않아!
+      results.append(job_data)
 
       
 
     
 
+
+
+
+
+
+
+
       
-      
+    
+# 이 python list를 만들었고, 즉 이제 for resulit in을 사용 가능 하다.
+
+  for result in results:
+    print(result)
+    print("///////////////////////////////////////////////////////////////")
+
+# 이제 web의 html에 대한 것들을 모두 python 형태의 데이터로 가져왔으니 이것을 파일안에 저장할 수 있다.
