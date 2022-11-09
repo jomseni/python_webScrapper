@@ -8,6 +8,7 @@ from extractors.wwr import extract_wwr_jobs
 # jobs = extract_wwr_jobs("python")
 # print(jobs)
 
+
 # 우리가 한 것은 모든 코드를 extract_wwr_jobs 안에 넣었고
 # 이 function은 extractors 폴더 안에 있고 extarct_wwr_jobs는 하나의 parameter를 받을 것이다.
 #  사용자가 보낸 입력 값(keyword)가 더해진 url을 받을 것이다
